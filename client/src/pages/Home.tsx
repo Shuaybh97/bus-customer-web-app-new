@@ -1,9 +1,8 @@
 import { Navbar } from "@/components/Navbar";
 import { SearchForm } from "@/components/SearchForm";
 import { usePopularLocations } from "@/hooks/use-locations";
-import { Link } from "wouter";
+import { Link } from "react-router-dom";
 import { ArrowRight, MapPin, Ticket, ShieldCheck, Clock } from "lucide-react";
-import { motion } from "framer-motion";
 
 export default function Home() {
   const { data: popularLocations } = usePopularLocations();
@@ -19,35 +18,26 @@ export default function Home() {
         <div className="absolute bottom-0 left-0 w-1/3 h-1/2 bg-white/5 rounded-full blur-3xl" />
         
         <div className="max-w-7xl mx-auto relative z-10 text-center">
-          <motion.h1 
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6 }}
+          <h1 
             className="text-4xl md:text-6xl font-extrabold tracking-tight mb-6"
           >
             Trains, buses & flights. <br />
             <span className="text-[#FA8B28]">One search.</span>
-          </motion.h1>
-          <motion.p 
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            transition={{ delay: 0.3, duration: 0.6 }}
+          </h1>
+          <p 
             className="text-lg md:text-xl text-blue-100 max-w-2xl mx-auto mb-10"
           >
             Compare and book travel across Europe and North America. Join millions of users who save time and money.
-          </motion.p>
+          </p>
         </div>
       </section>
 
       {/* Search Form Container - Overlaps Hero */}
       <div className="max-w-6xl mx-auto px-4 w-full relative z-20 -mt-32 md:-mt-24">
-        <motion.div
-          initial={{ opacity: 0, y: 40 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ delay: 0.5, duration: 0.6 }}
+        <div
         >
           <SearchForm />
-        </motion.div>
+        </div>
       </div>
 
       {/* Features Section */}
@@ -87,14 +77,14 @@ export default function Home() {
               <h2 className="text-3xl font-bold text-foreground">Popular Destinations</h2>
               <p className="text-muted-foreground mt-2">Explore the most travelled cities this season</p>
             </div>
-            <Link href="/search" className="hidden md:flex items-center text-primary font-semibold hover:text-primary/80 transition-colors">
+            <Link to="/search" className="hidden md:flex items-center text-primary font-semibold hover:text-primary/80 transition-colors">
               See all destinations <ArrowRight className="ml-2 w-4 h-4" />
             </Link>
           </div>
 
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
-            {popularLocations?.slice(0, 4).map((location, idx) => (
-              <Link href={`/search?destinationId=${location.id}`} key={location.id} className="group">
+            {(popularLocations as any[])?.slice(0, 4)?.map((loc: any, idx: number) => (
+              <Link to={`/search?destinationId=${loc.id}`} key={loc.id} className="group">
                 <div className="relative aspect-[3/4] rounded-2xl overflow-hidden cursor-pointer shadow-md hover:shadow-xl transition-all duration-300">
                   {/* Fallback gradients if no images, but using Unsplash urls here */}
                   <img 
@@ -104,13 +94,13 @@ export default function Home() {
                       idx === 2 ? "1599946347371-3e1a66d6a269" : // Berlin (placeholder)
                       "1534351590905-125801294a8e"               // Venice
                     }?w=600&h=800&fit=crop`}
-                    alt={location.name}
+                    alt={loc.name}
                     className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700"
                   />
                   <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent" />
                   <div className="absolute bottom-0 left-0 p-6 text-white">
-                    <p className="text-sm font-medium uppercase tracking-wider opacity-80">{location.countryCode}</p>
-                    <h3 className="text-2xl font-bold">{location.name}</h3>
+                    <p className="text-sm font-medium uppercase tracking-wider opacity-80">{loc.countryCode}</p>
+                    <h3 className="text-2xl font-bold">{loc.name}</h3>
                   </div>
                 </div>
               </Link>

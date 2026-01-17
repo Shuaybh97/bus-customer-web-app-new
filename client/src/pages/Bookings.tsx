@@ -6,7 +6,7 @@ import { Card, CardHeader, CardTitle, CardContent } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { format, parseISO } from "date-fns";
-import { Link } from "wouter";
+import { Link } from "react-router-dom";
 
 export default function Bookings() {
   const { isAuthenticated, isLoading: isAuthLoading } = useAuth();
@@ -49,12 +49,12 @@ export default function Bookings() {
             <h3 className="text-xl font-bold mb-2">No bookings yet</h3>
             <p className="text-muted-foreground mb-6">You haven't booked any trips yet. Start exploring!</p>
             <Button asChild>
-              <Link href="/">Search Trips</Link>
+              <Link to="/">Search Trips</Link>
             </Button>
           </div>
         ) : (
           <div className="grid gap-6">
-            {bookings.map((booking) => (
+            {(bookings as any[])?.map((booking: any) => (
               <Card key={booking.id} className="overflow-hidden border-border/60 hover:shadow-md transition-shadow">
                 <div className="flex flex-col md:flex-row">
                   <div className="bg-primary/5 p-6 flex flex-col justify-center items-center md:items-start min-w-[200px] border-b md:border-b-0 md:border-r border-border/60">

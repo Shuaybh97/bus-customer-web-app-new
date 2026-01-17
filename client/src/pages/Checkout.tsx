@@ -1,4 +1,4 @@
-import { useRoute, Link } from "wouter";
+import { useParams, Link } from "react-router-dom";
 import { useTrip } from "@/hooks/use-trips";
 import { useCreateBooking } from "@/hooks/use-bookings";
 import { Navbar } from "@/components/Navbar";
@@ -12,9 +12,9 @@ import { TransportIcon } from "@/components/TransportIcon";
 import { Loader2, ArrowLeft, CheckCircle2 } from "lucide-react";
 
 export default function Checkout() {
-  const [match, params] = useRoute("/checkout/:id");
+  const params = useParams();
   const tripId = Number(params?.id);
-  const { data: trip, isLoading } = useTrip(tripId);
+  const { data: trip, isLoading } = useTrip(tripId) as { data: any, isLoading: boolean };
   const { mutate: createBooking, isPending: isBooking } = useCreateBooking();
 
   if (isLoading) {
@@ -43,7 +43,7 @@ export default function Checkout() {
       <Navbar />
 
       <main className="max-w-4xl mx-auto px-4 py-8">
-        <Link href="/search" className="inline-flex items-center text-muted-foreground hover:text-primary mb-6 transition-colors">
+        <Link to="/search" className="inline-flex items-center text-muted-foreground hover:text-primary mb-6 transition-colors">
           <ArrowLeft className="w-4 h-4 mr-2" /> Back to results
         </Link>
 

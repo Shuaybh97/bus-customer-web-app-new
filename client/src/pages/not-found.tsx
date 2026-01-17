@@ -1,6 +1,6 @@
 import { Card, CardContent } from "@/components/ui/card";
 import { AlertCircle } from "lucide-react";
-import { Link } from "wouter";
+import { Link } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 
 export default function NotFound() {
@@ -19,7 +19,7 @@ export default function NotFound() {
 
           <div className="mt-6">
             <Button asChild className="w-full">
-               <Link href="/">Return Home</Link>
+               <Link to="/">Return Home</Link>
             </Button>
           </div>
         </CardContent>

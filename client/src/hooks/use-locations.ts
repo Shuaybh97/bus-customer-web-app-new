@@ -1,29 +1,22 @@
 import { useQuery } from "@tanstack/react-query";
-import { api, buildUrl } from "@shared/routes";
-import { z } from "zod";
 
+// Stub - locations functionality not implemented in auth-only backend
 export function useLocationSearch(query: string) {
   return useQuery({
-    queryKey: [api.locations.search.path, query],
+    queryKey: ["/api/locations/search", query],
     queryFn: async () => {
-      if (!query || query.length < 2) return [];
-      const url = `${api.locations.search.path}?q=${encodeURIComponent(query)}`;
-      const res = await fetch(url, { credentials: "include" });
-      if (!res.ok) throw new Error("Failed to search locations");
-      return api.locations.search.responses[200].parse(await res.json());
+      return [];
     },
     enabled: query.length >= 2,
-    staleTime: 1000 * 60 * 5, // 5 minutes
+    staleTime: 1000 * 60 * 5,
   });
 }
 
 export function usePopularLocations() {
   return useQuery({
-    queryKey: [api.locations.popular.path],
+    queryKey: ["/api/locations/popular"],
     queryFn: async () => {
-      const res = await fetch(api.locations.popular.path, { credentials: "include" });
-      if (!res.ok) throw new Error("Failed to fetch popular locations");
-      return api.locations.popular.responses[200].parse(await res.json());
+      return [];
     },
   });
 }

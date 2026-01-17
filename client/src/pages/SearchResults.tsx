@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { useLocation, Link } from "wouter";
+import { useLocation, Link } from "react-router-dom";
 import { Navbar } from "@/components/Navbar";
 import { SearchForm } from "@/components/SearchForm";
 import { TransportIcon } from "@/components/TransportIcon";
@@ -41,7 +41,7 @@ function formatTime(dateString: string): string {
 }
 
 export default function SearchResults() {
-  const [location] = useLocation();
+  const location = useLocation();
   const [trips, setTrips] = useState<Trip[]>([]);
   const [loading, setLoading] = useState(true);
   
@@ -239,7 +239,7 @@ export default function SearchResults() {
                              </span>
                            </div>
                            <Button asChild size="lg" className="bg-[#FA8B28] hover:bg-[#E67A1C] text-white font-bold rounded-xl shadow-lg shadow-orange-500/20">
-                             <Link href={`/checkout/${trip.id}`}>
+                             <Link to={`/checkout/${trip.id}`}>
                                Select <ArrowRight className="ml-2 w-4 h-4" />
                              </Link>
                            </Button>

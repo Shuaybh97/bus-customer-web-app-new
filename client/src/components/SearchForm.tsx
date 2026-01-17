@@ -1,10 +1,11 @@
 import { useState, useEffect } from "react";
-import { useLocation } from "wouter";
+
+import { useNavigate } from "react-router-dom";
 import { useLocationSearch } from "@/hooks/use-locations";
 import { Button } from "@/components/ui/button";
 import { Label } from "@/components/ui/label";
 import { Checkbox } from "@/components/ui/checkbox";
-import { Calendar as CalendarIcon, MapPin, ArrowLeftRight } from "lucide-react";
+import { Calendar as CalendarIcon, ArrowLeftRight } from "lucide-react";
 import { format, parse } from "date-fns";
 import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover";
 import { Calendar } from "@/components/ui/calendar";
@@ -30,7 +31,7 @@ interface LocationInputProps {
 function LocationInput({ label, placeholder, value, onChange, icon }: LocationInputProps) {
   const [open, setOpen] = useState(false);
   const [search, setSearch] = useState("");
-  const { data: locations = [], isLoading } = useLocationSearch(search);
+  const { data: locations = [] } = useLocationSearch(search);
 
   return (
     <div className="flex flex-col gap-2 w-full">
@@ -95,7 +96,7 @@ export function SearchForm({
 }: { 
   variant?: "hero" | "compact"; 
 }) {
-  const [location, navigate] = useLocation();
+  const navigate = useNavigate();
   const [origin, setOrigin] = useState<LocationOption | null>(null);
   const [destination, setDestination] = useState<LocationOption | null>(null);
   const [date, setDate] = useState<Date | undefined>(new Date());
@@ -105,7 +106,7 @@ export function SearchForm({
   // Load initial values from URL parameters
   useEffect(() => {
     const loadInitialValues = async () => {
-      if (!location.startsWith('/search')) {
+      if (!location.pathname.startsWith('/search')) {
         return;
       }
 
@@ -266,7 +267,7 @@ export function SearchForm({
                       mode="single"
                       selected={returnDate}
                       onSelect={setReturnDate}
-                      disabled={(d) => d < new Date() || (date && d < date)}
+                      disabled={(d: Date) => d < new Date() || (date ? d < date : false)}
                     />
                   </div>
                 )}
